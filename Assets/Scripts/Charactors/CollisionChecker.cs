@@ -9,32 +9,19 @@ public class CollisionChecker : MonoBehaviour
         playerController = GetComponent<PlayerController>();
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        playerController.onGround = false;
+        if (!playerController.onGround)
+        {
+            playerController.onGround = true;
+        }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        int cnum = collision.contactCount;
-        for (int i = 0; i < cnum; i++)
+        if (playerController.onGround)
         {
-            ContactPoint2D contact = collision.GetContact(i);
-            if (contact.normal.y > 0.8f)
-            {
-                if (!playerController.onGround)
-                {
-                    playerController.onGround = true;
-                }
-            }
-            else if (contact.normal.y <= 0.8f)
-            {
-                if (playerController.onGround)
-                {
-                    playerController.onGround = false;
-                }
-            }
-
+            playerController.onGround = false;
         }
     }
 }
