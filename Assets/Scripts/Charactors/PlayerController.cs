@@ -2,67 +2,98 @@
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D body;
-
-    private bool onGround;
-
+    [HideInInspector]
+    public Animator animator;
+    [HideInInspector]
+    public Rigidbody2D body;
+    private StateMachine stateMachine;
+    [HideInInspector]
+    public bool onGround;
     public float speed;
     public float jumpPower;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-
+        stateMachine = GetComponent<StateMachine>();
         onGround = false;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         KeyboardControl();
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        onGround = false;
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        int cnum = collision.contactCount;
-        for (int i = 0; i < cnum; i++)
-        {
-            ContactPoint2D contact = collision.GetContact(i);
-            if (contact.normal.y > 0.8f)
-            {
-                if (!onGround)
-                {
-                    onGround = true;
-                }
-            }
-            else if (contact.normal.y <= 0.8f)
-            {
-                if (onGround)
-                {
-                    onGround = false;
-                }
-            }
-
-        }
-    }
-
     private void KeyboardControl()
     {
-        // 移动
-        float sp = speed * Input.GetAxis("Horizontal");
-        body.velocity = new Vector2(sp, body.velocity.y);
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            stateMachine.ChangeState("Dead");
+            return;
+        }
 
-        // 跳跃
+        if (stateMachine.state == StateMachine.States.Blow ||
+            stateMachine.state == StateMachine.States.Dead ||
+            stateMachine.state == StateMachine.States.Tumble ||
+            stateMachine.state == StateMachine.States.Infatuate ||
+            stateMachine.state == StateMachine.States.Vomit)
+        {
+            return;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            stateMachine.ChangeState("Infatuate");
+            return;
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            stateMachine.ChangeState("Vomit");
+            return;
+        }
+
+        if (stateMachine.state != StateMachine.States.Inhale)
+        {
+            float sp = speed * Input.GetAxis("Horizontal");
+            body.velocity = new Vector2(sp, body.velocity.y);
+        }
+
         if (onGround)
         {
-            if (Input.GetAxis("Vertical") > 0.0f)
+            if (Input.GetKey(KeyCode.X))
+            {
+                stateMachine.ChangeState("Inhale");
+            }
+            else if (Input.GetKeyUp(KeyCode.X))
+            {
+                stateMachine.ChangeState("Blow");
+            }
+            else if (Input.GetKeyDown(KeyCode.Z))
             {
                 body.AddForce(new Vector2(0.0f, jumpPower));
             }
+            else if (body.velocity.x == 0.0f)
+            {
+                stateMachine.ChangeState("Idle");
+            }
+            else if (body.velocity.x != 0.0f)
+            {
+                stateMachine.ChangeState("Move");
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    stateMachine.ChangeState("Tumble");
+                }
+            }
         }
+        else if (!onGround)
+        {
+            stateMachine.ChangeState("Jump");
+        }
+    }
+
+    private void ChangeToStateIdle()
+    {
+        stateMachine.ChangeState("Idle");
     }
 }

@@ -235,7 +235,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 77b7fb3e5da67104da7e827dfb373607, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -440,8 +440,10 @@ GameObject:
   - component: {fileID: 1949176991}
   - component: {fileID: 1949176995}
   - component: {fileID: 1949176994}
-  - component: {fileID: 1949176993}
   - component: {fileID: 1949176996}
+  - component: {fileID: 1949176993}
+  - component: {fileID: 1949176997}
+  - component: {fileID: 1949176998}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -486,7 +488,7 @@ SpriteRenderer:
   m_SortingLayerID: 1246042951
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e7159d8686c051143a79656e752e39ce, type: 3}
+  m_Sprite: {fileID: 21300028, guid: e7159d8686c051143a79656e752e39ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -523,8 +525,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270fe9dbfde15744e912367bfd336955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  body: {fileID: 0}
+  onGround: 0
   speed: 3
-  jumpPower: 150
+  jumpPower: 250
 --- !u!58 &1949176994
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -581,3 +586,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1949176997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949176990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e46e7dda38aeb458aedfe11eeea46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1949176998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949176990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35477ad0d0c2c084f9069f6ac6696880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
