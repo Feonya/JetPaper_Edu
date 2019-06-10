@@ -2,11 +2,9 @@
 
 public class PlayerController : MonoBehaviour
 {
-    [HideInInspector]
-    public Animator animator;
-    [HideInInspector]
-    public Rigidbody2D body;
+    private Rigidbody2D body;
     private StateMachine stateMachine;
+
     [HideInInspector]
     public bool onGround;
     public float speed;
@@ -14,9 +12,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
         stateMachine = GetComponent<StateMachine>();
+
         onGround = false;
     }
 
@@ -27,12 +25,6 @@ public class PlayerController : MonoBehaviour
 
     private void KeyboardControl()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            stateMachine.ChangeState("Dead");
-            return;
-        }
-
         if (stateMachine.state == StateMachine.States.Blow ||
             stateMachine.state == StateMachine.States.Dead ||
             stateMachine.state == StateMachine.States.Tumble ||
@@ -80,6 +72,7 @@ public class PlayerController : MonoBehaviour
             else if (body.velocity.x != 0.0f)
             {
                 stateMachine.ChangeState("Move");
+
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     stateMachine.ChangeState("Tumble");
@@ -90,6 +83,11 @@ public class PlayerController : MonoBehaviour
         {
             stateMachine.ChangeState("Jump");
         }
+    }
+
+    public void Die()
+    {
+        stateMachine.ChangeState("Dead");
     }
 
     private void ChangeToStateIdle()
