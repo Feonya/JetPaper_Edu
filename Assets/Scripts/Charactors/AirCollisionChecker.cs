@@ -15,7 +15,7 @@ public class AirCollisionChecker : MonoBehaviour
     {
         stateMachine = GetComponent<StateMachine>();
 
-        airCollider = transform.Find("Air").GetComponent<CircleCollider2D>();
+        airCollider = transform.Find("Air").GetComponent<CapsuleCollider2D>();
         planeBody = GameObject.FindWithTag("Plane").GetComponent<Rigidbody2D>();
 
         canCollide = false;
