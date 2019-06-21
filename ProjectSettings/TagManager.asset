@@ -51,3 +51,6 @@ TagManager:
   - name: Plane
     uniqueID: 496725241
     locked: 0
+  - name: InFrontOfPlayer
+    uniqueID: 3880811093
+    locked: 0

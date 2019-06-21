@@ -33,17 +33,6 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            stateMachine.ChangeState("Infatuate");
-            return;
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            stateMachine.ChangeState("Vomit");
-            return;
-        }
 
         if (stateMachine.state != StateMachine.States.Inhale)
         {
@@ -72,11 +61,6 @@ public class PlayerController : MonoBehaviour
             else if (body.velocity.x != 0.0f)
             {
                 stateMachine.ChangeState("Move");
-
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    stateMachine.ChangeState("Tumble");
-                }
             }
         }
         else if (!onGround)
@@ -85,12 +69,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Infatuate()
+    {
+        stateMachine.ChangeState("Infatuate");
+    }
+
+    public void Vomit()
+    {
+        stateMachine.ChangeState("Vomit");
+    }
+
+    public void Tumble()
+    {
+        stateMachine.ChangeState("Tumble");
+    }
+
     public void Die()
     {
         stateMachine.ChangeState("Dead");
     }
 
-    private void ChangeToStateIdle()
+    private void Idle()
     {
         stateMachine.ChangeState("Idle");
     }
