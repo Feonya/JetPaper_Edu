@@ -1,18 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class EvilCat : MonoBehaviour
+public class PurpleCat : MonoBehaviour
 {
     private PlayerDistanceChecker playerDistanceChecker;
-    private Transform evilCatTransform;
-    private SpriteRenderer evilCatSpriteRenderer;
-    private Animator evilCatAnimator;
-    private GameObject haha;
+    private Transform purpleCatTransform;
+    private SpriteRenderer purpleCatSpriteRenderer;
+    private Animator purpleCatAnimator;
     private Transform playerTransform;
     private Transform planeTransform;
     private SpriteRenderer planeSpriteRenderer;
     private PlaneCollisionChecker planeCollisionChecker;
-    private Sprite skullPlaneSprite;
+    private Sprite purplePlaneSprite;
     private CaputureChecker caputureChecker;
 
     private bool active;
@@ -22,15 +21,14 @@ public class EvilCat : MonoBehaviour
     private void Start()
     {
         playerDistanceChecker = GetComponent<PlayerDistanceChecker>();
-        evilCatTransform = transform;
-        evilCatSpriteRenderer = evilCatTransform.GetComponent<SpriteRenderer>();
-        evilCatAnimator = evilCatTransform.GetComponent<Animator>();
-        haha = evilCatTransform.GetChild(0).gameObject;
+        purpleCatTransform = transform;
+        purpleCatSpriteRenderer = purpleCatTransform.GetComponent<SpriteRenderer>();
+        purpleCatAnimator = purpleCatTransform.GetComponent<Animator>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         planeTransform = GameObject.FindGameObjectWithTag("Plane").transform;
         planeSpriteRenderer = planeTransform.GetComponent<SpriteRenderer>();
         planeCollisionChecker = planeTransform.GetComponent<PlaneCollisionChecker>();
-        skullPlaneSprite = Resources.LoadAll<Sprite>("planes")[4];
+        purplePlaneSprite = Resources.LoadAll<Sprite>("planes")[3];
         caputureChecker = GetComponent<CaputureChecker>();
 
         active = false;
@@ -51,8 +49,7 @@ public class EvilCat : MonoBehaviour
         {
             caputureChecker.CheckCaputure();
             caputured = true;
-            evilCatSpriteRenderer.flipX = false;
-            StartCoroutine(Haha());
+            purpleCatSpriteRenderer.flipX = false;
         }
     }
 
@@ -62,12 +59,12 @@ public class EvilCat : MonoBehaviour
         {
             if (!caputured)
             {
-                evilCatTransform.position += new Vector3(-0.05f, 0.0f, 0.0f);
+                purpleCatTransform.position += new Vector3(-0.05f, 0.0f, 0.0f);
             }
             else
             {
                 float positionX = playerTransform.position.x - 1.0f;
-                evilCatTransform.position = new Vector3(positionX, evilCatTransform.position.y, 0.0f);
+                purpleCatTransform.position = new Vector3(positionX, purpleCatTransform.position.y, 0.0f);
             }
         }
     }
@@ -76,16 +73,16 @@ public class EvilCat : MonoBehaviour
     {
         active = false;
 
-        evilCatAnimator.SetBool("flying", true);
+        purpleCatAnimator.SetBool("flying", true);
 
         StartCoroutine(TransformIntoPlane());
     }
 
     private void Fly()
     {
-        if (evilCatAnimator.GetBool("flying"))
+        if (purpleCatAnimator.GetBool("flying"))
         {
-            evilCatTransform.position += new Vector3(0.0f, 0.02f, 0.0f);
+            purpleCatTransform.position += new Vector3(0.0f, 0.02f, 0.0f);
         }
     }
 
@@ -93,20 +90,11 @@ public class EvilCat : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
 
-        planeSpriteRenderer.sprite = skullPlaneSprite;
-        planeTransform.position = evilCatTransform.position;
+        planeSpriteRenderer.sprite = purplePlaneSprite;
+        planeTransform.position = purpleCatTransform.position;
         planeCollisionChecker.onGround = false;
 
         Destroy(gameObject);
-    }
-
-    private IEnumerator Haha()
-    {
-        haha.SetActive(true);
-
-        yield return new WaitForSeconds(3.0f);
-
-        Destroy(haha);
     }
 
     private void ActivateIt()

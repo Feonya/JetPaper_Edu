@@ -5,7 +5,7 @@ public class UFO : MonoBehaviour
 {
     private PlayerDistanceChecker playerDistanceChecker;
     private Transform playerTransform;
-    private Collider2D PlayerCollider;
+    private Collider2D playerCollider;
     private PlayerController playerController;
     private Transform ufoTransform;
     private Transform waveTransform;
@@ -18,7 +18,7 @@ public class UFO : MonoBehaviour
     {
         playerDistanceChecker = GetComponent<PlayerDistanceChecker>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        PlayerCollider = playerTransform.GetComponent<CircleCollider2D>();
+        playerCollider = playerTransform.GetComponent<CircleCollider2D>();
         playerController = playerTransform.GetComponent<PlayerController>();
         ufoTransform = transform;
         waveTransform = ufoTransform.GetChild(0);
@@ -67,7 +67,7 @@ public class UFO : MonoBehaviour
 
     private void CheckCollide()
     {
-        if (waveCollider.IsTouching(PlayerCollider))
+        if (waveCollider.IsTouching(playerCollider))
         {
             playerController.Die();
         }

@@ -3,7 +3,7 @@
 public class Kid : MonoBehaviour
 {
     private Transform kidTransform;
-    private Transform KidBabasTransform;
+    private Transform kidBabasTransform;
     private Transform currentBabaTransform;
 
     private Vector3 originPosition;
@@ -12,8 +12,8 @@ public class Kid : MonoBehaviour
     private void Start()
     {
         kidTransform = transform;
-        KidBabasTransform = GameObject.Find("KidBabas").transform;
-        currentBabaTransform = KidBabasTransform.GetChild(0);
+        kidBabasTransform = GameObject.Find("KidBabas").transform;
+        currentBabaTransform = kidBabasTransform.GetChild(0);
 
         originPosition = kidTransform.position;
         targetPosition = originPosition;
@@ -53,6 +53,6 @@ public class Kid : MonoBehaviour
         currentBabaTransform.position = kidTransform.position;
         currentBabaTransform.SetAsLastSibling();
 
-        currentBabaTransform = KidBabasTransform.GetChild(0);
+        currentBabaTransform = kidBabasTransform.GetChild(0);
     }
 }

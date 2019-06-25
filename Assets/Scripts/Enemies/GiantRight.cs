@@ -4,7 +4,7 @@ public class GiantRight : MonoBehaviour
 {
     private PlayerController playerController;
     private Collider2D playerCollider;
-    private GameObject Giant;
+    private GameObject giant;
     private PlayerDistanceChecker playerDistanceChecker;
     private Animator rightAnimator;
     private Transform rightTransform;
@@ -19,7 +19,7 @@ public class GiantRight : MonoBehaviour
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerCollider = playerController.GetComponent<CircleCollider2D>();
-        Giant = GameObject.Find("Giant");
+        giant = GameObject.Find("Giant");
         playerDistanceChecker = GetComponent<PlayerDistanceChecker>();
         rightAnimator = GetComponent<Animator>();
         rightTransform = transform;
@@ -85,7 +85,7 @@ public class GiantRight : MonoBehaviour
     {
         if (playerDistanceChecker.outOfRange)
         {
-            Destroy(Giant);
+            Destroy(giant);
         }
     }
 }
