@@ -90,6 +90,7 @@ public class YellowCat : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
 
+        caputured = false;
         planeSpriteRenderer.sprite = yellowPlaneSprite;
         planeTransform.position = yellowCatTransform.position;
         planeCollisionChecker.onGround = false;

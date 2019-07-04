@@ -93,6 +93,7 @@ public class EvilCat : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
 
+        caputured = false;
         planeSpriteRenderer.sprite = skullPlaneSprite;
         planeTransform.position = evilCatTransform.position;
         planeCollisionChecker.onGround = false;

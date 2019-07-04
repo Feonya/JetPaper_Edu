@@ -4,7 +4,7 @@ public class InhaleController : MonoBehaviour
 {
     private StateMachine stateMachine;
 
-    private Transform airTransform;
+    protected Transform airTransform;
 
     [HideInInspector]
     public float airPower;
@@ -16,7 +16,7 @@ public class InhaleController : MonoBehaviour
 
     private bool startInhale;
 
-    private void Start()
+    protected void Start()
     {
         stateMachine = GetComponent<StateMachine>();
 
@@ -28,7 +28,7 @@ public class InhaleController : MonoBehaviour
         startInhale = false;
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         Inhale();
     }

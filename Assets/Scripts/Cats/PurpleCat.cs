@@ -90,6 +90,7 @@ public class PurpleCat : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
 
+        caputured = false;
         planeSpriteRenderer.sprite = purplePlaneSprite;
         planeTransform.position = purpleCatTransform.position;
         planeCollisionChecker.onGround = false;

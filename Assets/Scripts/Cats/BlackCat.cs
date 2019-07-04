@@ -90,6 +90,7 @@ public class BlackCat : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
 
+        caputured = false;
         planeSpriteRenderer.sprite = blackPlaneSprite;
         planeTransform.position = blackCatTransform.position;
         planeCollisionChecker.onGround = false;

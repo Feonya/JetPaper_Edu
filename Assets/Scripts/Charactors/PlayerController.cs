@@ -2,13 +2,19 @@
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D body;
-    private StateMachine stateMachine;
+    protected Rigidbody2D body;
+    protected StateMachine stateMachine;
 
     [HideInInspector]
     public bool onGround;
     public float speed;
     public float jumpPower;
+    [HideInInspector]
+    public bool isJumpButtonDown;
+    [HideInInspector]
+    public bool isBlowButtonDown;
+    [HideInInspector]
+    public bool isBlowButtonUp;
 
     private void Start()
     {
@@ -16,6 +22,10 @@ public class PlayerController : MonoBehaviour
         stateMachine = GetComponent<StateMachine>();
 
         onGround = false;
+
+        isJumpButtonDown = false;
+        isBlowButtonDown = false;
+        isBlowButtonUp = false;
     }
 
     private void Update()
@@ -42,17 +52,19 @@ public class PlayerController : MonoBehaviour
 
         if (onGround)
         {
-            if (Input.GetKey(KeyCode.X))
+            if (Input.GetKey(KeyCode.X) || isBlowButtonDown)
             {
                 stateMachine.ChangeState("Inhale");
             }
-            else if (Input.GetKeyUp(KeyCode.X))
+            else if (Input.GetKeyUp(KeyCode.X) || isBlowButtonUp)
             {
                 stateMachine.ChangeState("Blow");
+                isBlowButtonUp = false;
             }
-            else if (Input.GetKeyDown(KeyCode.Z))
+            else if (Input.GetKeyDown(KeyCode.Z) || isJumpButtonDown)
             {
                 body.AddForce(new Vector2(0.0f, jumpPower));
+                isJumpButtonDown = false;
             }
             else if (body.velocity.x == 0.0f)
             {
@@ -69,12 +81,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Infatuate()
+    public virtual void Infatuate()
     {
         stateMachine.ChangeState("Infatuate");
     }
 
-    public void Vomit()
+    public virtual void Vomit()
     {
         stateMachine.ChangeState("Vomit");
     }
@@ -89,7 +101,7 @@ public class PlayerController : MonoBehaviour
         stateMachine.ChangeState("Dead");
     }
 
-    private void Idle()
+    public void Idle()
     {
         stateMachine.ChangeState("Idle");
     }

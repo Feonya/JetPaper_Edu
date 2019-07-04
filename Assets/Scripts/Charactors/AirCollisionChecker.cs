@@ -4,14 +4,14 @@ public class AirCollisionChecker : MonoBehaviour
 {
     private StateMachine stateMachine;
 
-    private Collider2D airCollider;
+    protected Collider2D airCollider;
     private Rigidbody2D planeBody;
 
     private bool canCollide;
 
     private InhaleController inhaleController;
 
-    private void Start()
+    protected void Start()
     {
         stateMachine = GetComponent<StateMachine>();
 
