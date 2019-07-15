@@ -9,6 +9,7 @@ public class BeautifulGirl : MonoBehaviour
     private Collider2D playerCollider;
     private PlayerController playerController;
     private Transform playerTransform;
+    private AudioSource kissSound;
 
     private Vector3 kissOriginPosition;
     private Vector3 kissTargetPosition;
@@ -24,6 +25,7 @@ public class BeautifulGirl : MonoBehaviour
         playerCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        kissSound = GameObject.Find("KissSound").GetComponent<AudioSource>();
 
         kissOriginPosition = kissTransform.position;
         kissTargetPosition = kissTransform.position;
@@ -59,6 +61,8 @@ public class BeautifulGirl : MonoBehaviour
 
     private void StartKiss()
     {
+        kissSound.Play();
+
         kissSpriteRenderer.enabled = true;
         kissCollider.enabled = true;
 

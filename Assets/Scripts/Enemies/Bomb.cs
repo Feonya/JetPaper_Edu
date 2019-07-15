@@ -8,6 +8,7 @@ public class Bomb : MonoBehaviour
     private Collider2D explodeCollider;
     private Collider2D playerCollider;
     private PlayerController playerController;
+    private AudioSource explodeSound;
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class Bomb : MonoBehaviour
         explodeCollider = explode.GetComponent<CircleCollider2D>();
         playerCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
         playerController = playerCollider.GetComponent<PlayerController>();
+        explodeSound = GameObject.Find("ExplodeSound").GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -27,6 +29,7 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
 
+        explodeSound.Play();
         bombAnimator.SetBool("exploding", true);
     }
 

@@ -16,16 +16,21 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool isBlowButtonUp;
 
+    [HideInInspector]
+    public bool canControl;
+
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
         stateMachine = GetComponent<StateMachine>();
 
-        onGround = false;
+        onGround = true;
 
         isJumpButtonDown = false;
         isBlowButtonDown = false;
         isBlowButtonUp = false;
+
+        canControl = false;
     }
 
     private void Update()
@@ -35,6 +40,11 @@ public class PlayerController : MonoBehaviour
 
     private void KeyboardControl()
     {
+        if (!canControl)
+        {
+            return;
+        }
+
         if (stateMachine.state == StateMachine.States.Blow ||
             stateMachine.state == StateMachine.States.Dead ||
             stateMachine.state == StateMachine.States.Tumble ||

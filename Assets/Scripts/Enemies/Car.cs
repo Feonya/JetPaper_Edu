@@ -7,6 +7,11 @@ public class Car : MonoBehaviour
     private Collider2D carHeadCollider;
     private PlayerController playerController;
     private Collider2D playerCollider;
+    private Transform carTransform;
+    private GameObject carSounds;
+    private Transform klaxonSoundTransfom;
+    private AudioSource klaxonSound;
+    private AudioSource clashSound;
 
     private void Start()
     {
@@ -15,6 +20,11 @@ public class Car : MonoBehaviour
         carHeadCollider = GetComponents<BoxCollider2D>()[0];
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
+        carTransform = transform;
+        carSounds = GameObject.Find("CarSounds");
+        klaxonSoundTransfom = carSounds.transform.GetChild(0);
+        klaxonSound = carSounds.transform.GetChild(0).GetComponent<AudioSource>();
+        clashSound = carSounds.transform.GetChild(1).GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -26,6 +36,10 @@ public class Car : MonoBehaviour
     {
         if (carHeadCollider.IsTouching(playerCollider))
         {
+            if (!clashSound.isPlaying)
+            {
+                clashSound.Play();
+            }
             playerController.Die();
         }
     }
@@ -34,12 +48,19 @@ public class Car : MonoBehaviour
     {
         if (playerDistanceChecker.inRange)
         {
+            if (!klaxonSound.isPlaying)
+            {
+                klaxonSound.Play();
+            }
+            klaxonSoundTransfom.position = carTransform.position;
+
             carBody.velocity = new Vector2(-2.0f, 0.0f);
             CheckCollide();
         }
 
         if (playerDistanceChecker.outOfRange)
         {
+            Destroy(carSounds);
             Destroy(gameObject);
         }
     }

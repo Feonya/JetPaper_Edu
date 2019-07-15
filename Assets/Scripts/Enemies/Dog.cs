@@ -6,6 +6,7 @@ public class Dog : MonoBehaviour
     private PlayerDistanceChecker playerDistanceChecker;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private AudioSource dogSound;
 
     private bool canBite;
 
@@ -15,6 +16,7 @@ public class Dog : MonoBehaviour
         playerDistanceChecker = GetComponent<PlayerDistanceChecker>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        dogSound = GameObject.Find("DogSound").GetComponent<AudioSource>();
 
         canBite = false;
     }
@@ -47,10 +49,12 @@ public class Dog : MonoBehaviour
     private void StartBite()
     {
         canBite = true;
+        dogSound.Play();
     }
 
     private void DestroyIt()
     {
+        Destroy(dogSound.gameObject);
         Destroy(gameObject);
     }
 }

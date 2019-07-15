@@ -10,6 +10,7 @@ public class UFO : MonoBehaviour
     private Transform ufoTransform;
     private Transform waveTransform;
     private Collider2D waveCollider;
+    private AudioSource laserSound;
 
     private bool active;
     public int appearTime;
@@ -23,6 +24,7 @@ public class UFO : MonoBehaviour
         ufoTransform = transform;
         waveTransform = ufoTransform.GetChild(0);
         waveCollider = waveTransform.GetComponent<BoxCollider2D>();
+        laserSound = GameObject.Find("LaserSound").GetComponent<AudioSource>();
 
         active = false;
     }
@@ -47,6 +49,7 @@ public class UFO : MonoBehaviour
 
             waveTransform.position = ufoTransform.position - new Vector3(0.0f, 0.77f, 0.0f);
             waveTransform.gameObject.SetActive(true);
+            laserSound.Play();
         }
     }
 
