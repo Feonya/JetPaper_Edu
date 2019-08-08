@@ -98,7 +98,7 @@ public class PlayersSoundsController : MonoBehaviour
             }
         }
     }
-
+    
     private void PlayInfatuateSound()
     {
         if (stateMachine.state == StateMachine.States.Infatuate)

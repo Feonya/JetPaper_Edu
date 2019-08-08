@@ -4,12 +4,13 @@ public class Player4Controller : PlayerController
 {
     private new void FixedUpdate()
     {
+        base.FixedUpdate();
         JumpInTheSky();
     }
 
     private void JumpInTheSky()
     {
-        if (Input.GetKeyDown(KeyCode.Z) || base.isJumpButtonDown)
+        if (base.isJumpButtonDown)
         {
             if (base.stateMachine.state == StateMachine.States.Jump && base.body.velocity.y < 0.0f)
             {

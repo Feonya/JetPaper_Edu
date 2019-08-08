@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class DeadButtons : MonoBehaviour
@@ -10,6 +9,9 @@ public class DeadButtons : MonoBehaviour
     private GameObject exitButton;
 
     private StateMachine stateMachine;
+    //private Reviver testReviver;
+
+    private bool readyToShowButtons;
 
     private void Start()
     {
@@ -21,6 +23,9 @@ public class DeadButtons : MonoBehaviour
         exitButton.SetActive(false);
 
         stateMachine = GameObject.FindGameObjectWithTag("Player").GetComponent<StateMachine>();
+        //testReviver = stateMachine.transform.parent.GetComponent<Reviver>();
+
+        readyToShowButtons = false;
     }
 
     private void FixedUpdate()
@@ -31,6 +36,8 @@ public class DeadButtons : MonoBehaviour
     public void OnWatchAdButtonClick()
     {
         // 观看广告
+        Reviver.androidJavaObject.Call("ShowAds");
+        //testReviver.Revive();
     }
 
     public void OnRestartButtonClick()
@@ -47,9 +54,20 @@ public class DeadButtons : MonoBehaviour
     {
         if (stateMachine.state == StateMachine.States.Dead)
         {
-            if (!restartButton.activeSelf)
+            if (!readyToShowButtons)
             {
                 StartCoroutine(ShowButtons());
+                readyToShowButtons = true;
+            }
+        }
+        else
+        {
+            if (readyToShowButtons)
+            {
+                watchAdButton.SetActive(false);
+                restartButton.SetActive(false);
+                exitButton.SetActive(false);
+                readyToShowButtons = false;
             }
         }
     }
@@ -57,7 +75,7 @@ public class DeadButtons : MonoBehaviour
     private IEnumerator ShowButtons()
     {
         yield return new WaitForSeconds(2.0f);
-
+        
         watchAdButton.SetActive(true);
         restartButton.SetActive(true);
         exitButton.SetActive(true);

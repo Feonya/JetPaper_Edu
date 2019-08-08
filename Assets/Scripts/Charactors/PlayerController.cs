@@ -33,12 +33,17 @@ public class PlayerController : MonoBehaviour
         canControl = false;
     }
 
-    private void Update()
+    //private void Update()
+    //{
+    //    KeyboardControl();
+    //}
+
+    protected void FixedUpdate()
     {
-        KeyboardControl();
+        Control();
     }
 
-    private void KeyboardControl()
+    private void Control()
     {
         if (!canControl)
         {
@@ -56,22 +61,23 @@ public class PlayerController : MonoBehaviour
 
         if (stateMachine.state != StateMachine.States.Inhale)
         {
-            float sp = speed * Input.GetAxis("Horizontal");
+            float sp = Input.acceleration.x;
+            sp = Mathf.Clamp(sp, -1.0f, 1.0f) * speed * 3.5f;
             body.velocity = new Vector2(sp, body.velocity.y);
         }
 
         if (onGround)
         {
-            if (Input.GetKey(KeyCode.X) || isBlowButtonDown)
+            if (isBlowButtonDown)
             {
                 stateMachine.ChangeState("Inhale");
             }
-            else if (Input.GetKeyUp(KeyCode.X) || isBlowButtonUp)
+            else if (isBlowButtonUp)
             {
                 stateMachine.ChangeState("Blow");
                 isBlowButtonUp = false;
             }
-            else if (Input.GetKeyDown(KeyCode.Z) || isJumpButtonDown)
+            else if (isJumpButtonDown)
             {
                 body.AddForce(new Vector2(0.0f, jumpPower));
                 isJumpButtonDown = false;
@@ -90,6 +96,59 @@ public class PlayerController : MonoBehaviour
             stateMachine.ChangeState("Jump");
         }
     }
+
+    //private void KeyboardControl()
+    //{
+    //    if (!canControl)
+    //    {
+    //        return;
+    //    }
+
+    //    if (stateMachine.state == StateMachine.States.Blow ||
+    //        stateMachine.state == StateMachine.States.Dead ||
+    //        stateMachine.state == StateMachine.States.Tumble ||
+    //        stateMachine.state == StateMachine.States.Infatuate ||
+    //        stateMachine.state == StateMachine.States.Vomit)
+    //    {
+    //        return;
+    //    }
+
+    //    if (stateMachine.state != StateMachine.States.Inhale)
+    //    {
+    //        float sp = speed * Input.GetAxis("Horizontal");
+    //        body.velocity = new Vector2(sp, body.velocity.y);
+    //    }
+
+    //    if (onGround)
+    //    {
+    //        if (Input.GetKey(KeyCode.X) || isBlowButtonDown)
+    //        {
+    //            stateMachine.ChangeState("Inhale");
+    //        }
+    //        else if (Input.GetKeyUp(KeyCode.X) || isBlowButtonUp)
+    //        {
+    //            stateMachine.ChangeState("Blow");
+    //            isBlowButtonUp = false;
+    //        }
+    //        else if (Input.GetKeyDown(KeyCode.Z) || isJumpButtonDown)
+    //        {
+    //            body.AddForce(new Vector2(0.0f, jumpPower));
+    //            isJumpButtonDown = false;
+    //        }
+    //        else if (body.velocity.x == 0.0f)
+    //        {
+    //            stateMachine.ChangeState("Idle");
+    //        }
+    //        else if (body.velocity.x != 0.0f)
+    //        {
+    //            stateMachine.ChangeState("Move");
+    //        }
+    //    }
+    //    else if (!onGround)
+    //    {
+    //        stateMachine.ChangeState("Jump");
+    //    }
+    //}
 
     public virtual void Infatuate()
     {
